@@ -31,7 +31,7 @@ import com.google.android.gms.maps.model.MarkerOptions
 
 
 class MapsFragment : Fragment() {
-    var loc=LatLng(37.5408, 127.0793) //초기위치
+    var loc=LatLng(37.5408, 127.0793) //초기위치-건국대학교
     lateinit var fusedLocationProviderClient: FusedLocationProviderClient
     lateinit var locationRequest: LocationRequest
     lateinit var locationCallback: LocationCallback
@@ -55,11 +55,11 @@ class MapsFragment : Fragment() {
             googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(loc,16.5f))
             googleMap.setMinZoomPreference(10.0f)
             googleMap.setMaxZoomPreference(18.0f)
-            val option = MarkerOptions()
-            option.position(loc)
-            option.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN))
-            val mk1 = googleMap.addMarker(option)
-            mk1.showInfoWindow()
+//            val option = MarkerOptions()
+//            option.position(loc)
+//            option.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN))
+//            val mk1 = googleMap.addMarker(option)
+//            mk1.showInfoWindow()
         }
     }
 
