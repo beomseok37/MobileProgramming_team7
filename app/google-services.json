@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "867833566345",
+    "project_id": "honbap",
+    "storage_bucket": "honbap.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:867833566345:android:3a3e55ce6f7a353420a258",
+        "android_client_info": {
+          "package_name": "com.example.honbap"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "867833566345-der24dreh0f412u18e7c7j8mm09d6dhc.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBl-0bDUIfxPTYWa5lGlaU0Rhlc7YuyHi0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "867833566345-der24dreh0f412u18e7c7j8mm09d6dhc.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
