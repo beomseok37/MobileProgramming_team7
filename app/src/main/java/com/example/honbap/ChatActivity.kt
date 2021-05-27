@@ -1,11 +1,14 @@
 package com.example.honbap
 
+import android.content.DialogInterface
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -42,6 +45,7 @@ class ChatActivity : AppCompatActivity() {
             id= intent.getStringExtra("id").toString()
 
         }
+
 
         //그룹 채팅시 입장메세지 + intent 정보 물려받기
 
@@ -124,21 +128,56 @@ class ChatActivity : AppCompatActivity() {
     private fun initrecyclerview() {
         recyclerView = findViewById<RecyclerView>(R.id.ChatView)
         recyclerView.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
-        adapter = ChatAdapter(data)
+        adapter = ChatAdapter(data,id)
 
         adapter.itemClickListener=object :ChatAdapter.OnItemClickListener{
             override fun OnItemClick(holder: ChatAdapter.ViewHolder, view: View, data: Message, position: Int) {
+                if (id != data.id) {
+                    val dialog = AlertDialog.Builder(this@ChatActivity)
+                    dialog.setTitle("1:1채팅")
+                    dialog.setMessage(data.name + "님 과 1:1채팅을 하시겠습니까?")
+                    dialog.setIcon(R.drawable.ic_baseline_connect_without_contact_24)
+                    dialog.setPositiveButton("확인", DialogInterface.OnClickListener { dialog, which ->
 
-                Toast.makeText(this@ChatActivity,data.id,Toast.LENGTH_SHORT).show()
+                        val intent = Intent(this@ChatActivity, ChatActivity2::class.java)
+                        intent.putExtra("other_id", data.id)
+                        intent.putExtra("mynick", nick)
+                        intent.putExtra("myid", id)
+
+                        addSingleChatinfo(id, data.id)
+
+                        startActivity(intent)
+                        finish()
+                    })
+                    dialog.setNegativeButton("취소", DialogInterface.OnClickListener { dialog, which ->
+                        Toast.makeText(this@ChatActivity, data.name + "님 과 1:1채팅을 취소하였습니다.", Toast.LENGTH_SHORT).show()
+
+                    })
+
+                    dialog.show()
 
 
-
-
+                }
             }
+
+
         }
 
         recyclerView.adapter = adapter
 
     }
     //리사이클러뷰
+
+    fun addSingleChatinfo(id1:String, id2:String){
+
+        chatref = Firebase.getReference("SingleRoom_Info")
+        var id_1=chatref.child(id1)
+        id_1.child(id2).setValue("true")
+        var id_2=chatref.child(id2)
+        id_2.child(id1).setValue("true")
+
+
+
+
+    }
 }

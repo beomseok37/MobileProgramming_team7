@@ -6,7 +6,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 
-class ChatAdapter (val items:ArrayList<Message>): RecyclerView.Adapter<ChatAdapter.ViewHolder>() {
+class ChatAdapter (val items:ArrayList<Message>,val id:String): RecyclerView.Adapter<ChatAdapter.ViewHolder>() {
 
     interface OnItemClickListener {
         fun OnItemClick(holder: ViewHolder, view: View, data: Message, position: Int)
@@ -34,9 +34,8 @@ class ChatAdapter (val items:ArrayList<Message>): RecyclerView.Adapter<ChatAdapt
 
 
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        val name: TextView = itemView.findViewById(R.id.my_name)
-        val message: TextView = itemView.findViewById(R.id.my_msg)
-        val time: TextView = itemView.findViewById(R.id.my_time)
+
+
 
 
         init{
@@ -51,23 +50,73 @@ class ChatAdapter (val items:ArrayList<Message>): RecyclerView.Adapter<ChatAdapt
         }
     }
 
+
+
+
+    override fun getItemViewType(position: Int): Int {
+        if(id==items[position].id)
+            return 0
+        else
+            return 1
+    }
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
 
-        val view2 = LayoutInflater.from(parent.context).inflate(R.layout.otherchat, parent, false)
 
-        return ViewHolder(view2)
+        when(viewType){
+
+            0-> {
+                val view1 = LayoutInflater.from(parent.context).inflate(R.layout.mychat, parent, false)
+                return ViewHolder(view1)
+            }
+
+            else->  {
+                val view2 = LayoutInflater.from(parent.context).inflate(R.layout.otherchat, parent, false)
+                return ViewHolder(view2)
+            }
+        }
+
+
+
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
 
-        holder.name.text =items[position].name
-        holder.message.text=items[position].message
-        holder.time.text=items[position].time
+
+        if(holder.itemViewType==0) {
+
+
+            val mname: TextView = holder.itemView.findViewById(R.id.my_name)
+            val mmessage: TextView = holder.itemView.findViewById(R.id.my_msg)
+            val mtime: TextView = holder.itemView.findViewById(R.id.my_time)
+
+
+
+             mname.text =items[position].name
+             mmessage.text=items[position].message
+             mtime.text=items[position].time
+
+
+        }
+
+        else{
+
+            val oname: TextView = holder.itemView.findViewById(R.id.other_name)
+            val omessage: TextView = holder.itemView.findViewById(R.id.other_msg)
+            val otime: TextView = holder.itemView.findViewById(R.id.other_time)
+
+
+            oname.text = items[position].name
+            omessage.text = items[position].message
+            otime.text = items[position].time
+        }
+
 
     }
+
+
 
     override fun getItemCount(): Int {
         return items.size
     }
 }
-

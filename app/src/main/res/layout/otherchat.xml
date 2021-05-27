@@ -3,51 +3,50 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:paddingBottom="5dp">
 
     <ImageView
-        android:id="@+id/my_imageView"
-        android:layout_width="74dp"
-        android:layout_height="67dp"
+        android:id="@+id/other_imageView"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
         android:layout_marginStart="1dp"
         android:layout_marginTop="-1dp"
-        android:background="#FFFFFF"
+        android:background="@color/white"
+        android:backgroundTint="#FDFDFD"
         app:layout_constraintBottom_toBottomOf="parent"
         app:srcCompat="@drawable/ic_launcher_foreground" />
 
     <TextView
-        android:id="@+id/my_name"
+        android:id="@+id/other_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
-        android:layout_marginEnd="267dp"
-        android:layout_toRightOf="@+id/my_imageView"
+        android:layout_toRightOf="@+id/other_imageView"
         android:text="name"/>
 
 
     <TextView
-        android:id="@+id/my_msg"
+        android:id="@+id/other_msg"
         android:padding="10dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/my_name"
-        android:layout_marginLeft="0dp"
-        android:layout_marginTop="4dp"
-        android:layout_toRightOf="@id/my_imageView"
+        android:layout_below="@+id/other_name"
+        android:layout_marginTop="5dp"
+        android:layout_toRightOf="@id/other_imageView"
         android:maxWidth="250dp"
         android:text="Hello android" />
 
     <TextView
-        android:id="@+id/my_time"
+        android:id="@+id/other_time"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="24:24"
+        android:layout_alignBottom="@id/other_msg"
         android:layout_alignParentLeft="true"
         android:layout_alignParentEnd="true"
-        android:layout_alignBottom="@id/my_msg"
         android:layout_marginLeft="10dp"
-         />
+        android:text="24:24" />
 
 </RelativeLayout>
