@@ -9,6 +9,7 @@ class MainActivity : AppCompatActivity() {
     lateinit var binding: ActivityMainBinding
     val groupfrag=GroupFragment()
     val singlefrag=SingleFragment()
+    val settingfrag=SettingFragment()
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -36,7 +37,9 @@ class MainActivity : AppCompatActivity() {
             }
 
             Setting.setOnClickListener {
-
+                val frag = supportFragmentManager.beginTransaction()
+                frag.replace(R.id.frameLayout, settingfrag)
+                frag.commit()
 
             }
         }
