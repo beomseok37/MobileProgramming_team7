@@ -1,6 +1,10 @@
 package com.example.test
 
+import android.content.Intent
+import android.location.Address
+import android.location.Geocoder
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -9,6 +13,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DividerItemDecoration
+import com.example.test.MainActivity.Companion.datalist
+import com.google.android.gms.maps.model.LatLng
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -17,15 +23,11 @@ import org.json.JSONException
 import org.json.JSONObject
 import java.io.InputStream
 
-/**
- * A fragment representing a list of Items.
- */
 class ItemFragment : Fragment() {
 
     private var columnCount = 1
-    val datalist= ArrayList<Data>()
-    val scope= CoroutineScope(Dispatchers.IO)
     lateinit var adapter: MyItemRecyclerViewAdapter
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -36,46 +38,53 @@ class ItemFragment : Fragment() {
         if (view is RecyclerView) {
             adapter= MyItemRecyclerViewAdapter(datalist)
             with(view) {
-                addItemDecoration(DividerItemDecoration(context,LinearLayoutManager.VERTICAL))
+               // addItemDecoration(DividerItemDecoration(context,LinearLayoutManager.VERTICAL))
                 layoutManager = when {
                     columnCount <= 1 -> LinearLayoutManager(context)
                     else -> GridLayoutManager(context, columnCount)
                 }
-                //adapter = MyItemRecyclerViewAdapter(datalist)
             }
             view.adapter=adapter
         }
-        loadInfo()
+
         return view
     }
 
-    private fun loadInfo() {
-        scope.launch{
-            try{
-                val inputStream=activity!!.assets.open("info.json")
-                val size = inputStream.available()
-                val buffer = ByteArray(size)
-                inputStream.read(buffer)
-                inputStream.close()
-                val str=String(buffer, Charsets.UTF_8)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        itemTouch()
+    }
 
-                val json= JSONObject(str)
-                val data=json.getJSONArray("DATA")
-                for (i in 0 until data.length()) {
-                    //영업상태인 음식점의 이름, 전화번호, 주소 가져옴
-                    if (data.getJSONObject(i).getString("dtlstatenm") == "영업")
-                        adapter.values.add(Data(data.getJSONObject(i).getString("bplcnm"),data.getJSONObject(i).getString("sitetel"),
-                            data.getJSONObject(i).getString("sitewhladdr")))
-                }
-                withContext(Dispatchers.Main) {
-                    adapter.notifyDataSetChanged()
-                }
-
-            } catch (e: JSONException){
-                e.printStackTrace()
+    fun itemTouch(){
+        adapter.itemClickListener=object :MyItemRecyclerViewAdapter.OnitemClickListener{
+            override fun OnItemClick(
+                holder: MyItemRecyclerViewAdapter.ViewHolder,
+                view: View,
+                data: Data
+            ) {
+                getloc(data)
             }
+
         }
+    }
 
-
+    private fun getloc(data: Data) {
+        val geocoder:Geocoder=Geocoder(context) //주소를 좌표로 변환하기 위함
+        var addressList:List<Address>?=null
+        addressList=geocoder.getFromLocationName(data.address,5)
+      //  Log.i("info","${addressList.get(0)}")
+        val lat=addressList.get(0).latitude
+        val lng=addressList.get(0).longitude
+        val mapFragment=MapsFragment()
+        val bundle=Bundle()
+        val loc=LatLng(lat,lng)
+        bundle.putParcelable("location", loc)
+        bundle.putString("name",data.name)
+        bundle.putString("tel",data.tel)
+        mapFragment.arguments = bundle
+        activity?.supportFragmentManager!!.beginTransaction()
+            .addToBackStack(null)  //지도로 음식점 위치 확인하고 뒤로가기 버튼 누르면 다시 리스트로 돌아오게 함
+            .replace(R.id.frameLayout,mapFragment)
+            .commit()
     }
 }
