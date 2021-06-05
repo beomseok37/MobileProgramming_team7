@@ -90,8 +90,12 @@ class MapsFragment : Fragment(),PlacesListener {
         option.title(info[0])
         option.snippet(info[1])
         option.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE))
+        googleMap.clear()
         googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(restaurantLoc,16.0f))
-        googleMap.addMarker(option).showInfoWindow()
+        googleMap.addMarker(option)!!.showInfoWindow()
+        googleMap.addMarker(MarkerOptions()
+            .position(loc)
+            .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN))) //현재 위치도 나오게
         stopLocationUpdate()
     }
 
@@ -111,7 +115,8 @@ class MapsFragment : Fragment(),PlacesListener {
                 //현재위치
                 loc=LatLng(location.locations[location.locations.size-1].latitude,
                     location.locations[location.locations.size-1].longitude)
-                setCurrentLocation(loc) //위치이동하는 함수
+                if(!clickitem)
+                    setCurrentLocation(loc) //위치이동하는 함수
                 Log.i("location","LocationCallback()")
 
             }
@@ -221,14 +226,17 @@ class MapsFragment : Fragment(),PlacesListener {
     }
 
     fun initPlaces(){
-        NRPlaces.Builder()
-            .listener(this)
-            .key("AIzaSyCtpiZvm086B2evtw2F79PfS6ZocyY2Ey8")
-            .latlng(loc.latitude,loc.longitude)
-            .radius(700) //현재위치에서 700미터 이내 음식점
-            .type(PlaceType.RESTAURANT)
-            .build()
-            .execute()
+        if(!clickitem){
+            NRPlaces.Builder()
+                .listener(this)
+                .key("AIzaSyCtpiZvm086B2evtw2F79PfS6ZocyY2Ey8")
+                .latlng(loc.latitude,loc.longitude)
+                .radius(700) //현재위치에서 700미터 이내 음식점
+                .type(PlaceType.RESTAURANT)
+                .build()
+                .execute()
+        }
+
     }
 
 
