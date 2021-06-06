@@ -47,7 +47,7 @@ class MapsFragment : Fragment(),PlacesListener {
     lateinit var restaurantLoc:LatLng
     var clickitem=false
     lateinit var info:ArrayList<String>
-    lateinit var binding: FragmentMapsBinding
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
