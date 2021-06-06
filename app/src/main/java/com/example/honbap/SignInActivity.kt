@@ -105,6 +105,8 @@ class SignInActivity : AppCompatActivity() {
         var flag=false
         var count:Int=0
         var tempid:Int=0
+        var id=0
+        var nick=""
         rdb.child("auto").addListenerForSingleValueEvent(object: ValueEventListener {
             override fun onCancelled(error: DatabaseError) {
                 //
@@ -123,9 +125,12 @@ class SignInActivity : AppCompatActivity() {
                     tempid=i
                     val tempemail=snapshot.child("$i").child("userEmail").value.toString()
                     val temppassword=snapshot.child("$i").child("userPassword").value.toString()
+                    val usernick=snapshot.child("$i").child("userNickname").value.toString()
                     Log.i("email",tempemail)
                     Log.i("password",temppassword)
                     if(userid==tempemail && userpassword==temppassword){
+                        id=i
+                        nick=usernick
                         flag=true
                         break
                     }
@@ -142,6 +147,7 @@ class SignInActivity : AppCompatActivity() {
                         }
                         Toast.makeText(this@SignInActivity, "로그인 성공", Toast.LENGTH_SHORT).show()
                         val successintent= Intent(this@SignInActivity,MainActivity::class.java)
+                        successintent.putExtra("id",id.toString())
                         startActivity(successintent)
                         finish()
                     } else {

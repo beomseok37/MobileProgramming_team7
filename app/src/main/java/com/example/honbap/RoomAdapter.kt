@@ -55,7 +55,7 @@ class RoomAdapter (val items:ArrayList<Room>): RecyclerView.Adapter<RoomAdapter.
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
 
         holder.room_name.text =items[position].name
-        //holder.message.text=items[position].message
+
 
     }
 
