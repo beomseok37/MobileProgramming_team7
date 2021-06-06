@@ -53,7 +53,11 @@ class LoginDBAdapter(val context: Context): SQLiteOpenHelper(context, DB_NAME, n
         return flag
     }
     fun updateProduct(user: UserInDB): Boolean {
-        val uid=user.UserID
+        val readstrsql="select * from $TABLE_NAME;"
+        val readdb=readableDatabase
+        val readcursor = readdb.rawQuery(readstrsql,null)
+        readcursor.moveToFirst()
+        val uid=readcursor.getInt(0)
         val strsql="select * from $TABLE_NAME where $UID='$uid';"
         val db=writableDatabase
         val cursor = db.rawQuery(strsql,null)
@@ -61,11 +65,12 @@ class LoginDBAdapter(val context: Context): SQLiteOpenHelper(context, DB_NAME, n
         if(flag){
             cursor.moveToFirst()
             val values= ContentValues()
+            values.put(UID,user.UserID)
             values.put(USEREMAIL,user.UserEmail)
             values.put(USERPASSWORD,user.UserPassword)
             values.put(SAVEID,user.SaveID)
             values.put(AUTOLOGIN,user.AutoLogin)
-            db.update(TABLE_NAME,values,"$UID=?",arrayOf(uid.toString()))
+            db.update(TABLE_NAME,values,"$UID=$uid",null)
         }
         cursor.close()
         db.close()
@@ -102,5 +107,18 @@ class LoginDBAdapter(val context: Context): SQLiteOpenHelper(context, DB_NAME, n
         cursor.close()
         db.close()
         return info
+    }
+
+    fun logininfo():UserInDB{
+        val strsql="select * from $TABLE_NAME;"
+        val db=readableDatabase
+        val cursor = db.rawQuery(strsql,null)
+        cursor.moveToFirst()
+        val uid=cursor.getInt(0)
+        val uemail=cursor.getString(1)
+        val upassword=cursor.getString(2)
+        val savelogin=cursor.getInt(3)
+        val autologin=cursor.getInt(4)
+        return UserInDB(uid,uemail,upassword,savelogin,autologin)
     }
 }

@@ -33,6 +33,9 @@ class SignInActivity : AppCompatActivity() {
             }else if(LoginDBHelper.loginfun()>=2){
                 //자동로그인
                 val successintent = Intent(this,MainActivity::class.java)
+                val temp=LoginDBHelper.logininfo()
+                Log.i("useremail",temp.UserEmail)
+                //successintent.putExtra("logininfo",LoginDBHelper.logininfo())
                 startActivity(successintent)
                 finish()
             }

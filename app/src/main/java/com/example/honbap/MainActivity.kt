@@ -1,11 +1,10 @@
 package com.example.honbap
 
+import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import com.example.honbap.databinding.ActivityMainBinding
-import com.google.android.gms.maps.MapFragment
-import org.json.JSONException
-import org.json.JSONObject
 
 class MainActivity : AppCompatActivity() {
 
@@ -14,11 +13,16 @@ class MainActivity : AppCompatActivity() {
     val singlefrag=SingleFragment()
     val settingfrag=SettingFragment()
     val resfrag= RestaurantFragment()
+    lateinit var LoginDBHelper: LoginDBAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding= ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        LoginDBHelper = LoginDBAdapter(this)
+//        val data=intent.getSerializableExtra("logininfo") as UserInDB
+//        Log.i("useremail",data.UserEmail)
+        autologin()
         binding.apply {
 
 
@@ -55,5 +59,13 @@ class MainActivity : AppCompatActivity() {
         }
 
 
+    }
+    fun autologin(){
+        if(LoginDBHelper.loginfun()>=2){
+            //자동로그인으로 로그인할 경우
+            val successintent = Intent(this,MainActivity::class.java)
+            val temp=LoginDBHelper.logininfo()
+            Log.i("useremail",temp.UserEmail)
+        }
     }
 }
