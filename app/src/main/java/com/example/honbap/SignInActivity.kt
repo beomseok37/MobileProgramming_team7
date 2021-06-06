@@ -73,7 +73,7 @@ class SignInActivity : AppCompatActivity() {
                     userid = IDpageID.text.toString()
                     userpassword = IDpagePassword.text.toString()
                     //id와 password를 firebase에 넘겨 확인한다.
-                    checklogin(count,userid!!,userpassword!!)
+                    checklogin(userid!!,userpassword!!)
                 }
             }
             signupbtn.setOnClickListener {
@@ -98,14 +98,26 @@ class SignInActivity : AppCompatActivity() {
         val dlg = builder.create()
         dlg.show()
     }
-    fun checklogin(count:Int,userid:String,userpassword:String){
+    fun checklogin(userid:String,userpassword:String){
         var flag=false
+        var count:Int=0
+        var tempid:Int=0
+        rdb.child("auto").addListenerForSingleValueEvent(object: ValueEventListener {
+            override fun onCancelled(error: DatabaseError) {
+                //
+            }
+            override fun onDataChange(snapshot: DataSnapshot) {
+                count=snapshot.value.toString().toInt()
+            }
+
+        })
         rdb.addListenerForSingleValueEvent(object: ValueEventListener {
             override fun onCancelled(error: DatabaseError) {
                 //
             }
             override fun onDataChange(snapshot: DataSnapshot) {
                 for(i in 0..(count-1)){
+                    tempid=i
                     val tempemail=snapshot.child("$i").child("userEmail").value.toString()
                     val temppassword=snapshot.child("$i").child("userPassword").value.toString()
                     Log.i("email",tempemail)
@@ -119,9 +131,11 @@ class SignInActivity : AppCompatActivity() {
                 if(notdialog) {
                     if (flag) {
                         if(LoginDBHelper.loginbefore()){
-                            LoginDBHelper.updateProduct(UserInDB(1,userid,userpassword,saveemailflag,autologinflag))
+                            Log.i("login","update")
+                            LoginDBHelper.updateProduct(UserInDB(tempid,userid,userpassword,saveemailflag,autologinflag))
                         }else{
-                            LoginDBHelper.insertProduct(UserInDB(1,userid,userpassword,saveemailflag,autologinflag))
+                            Log.i("login","insert")
+                            LoginDBHelper.insertProduct(UserInDB(tempid,userid,userpassword,saveemailflag,autologinflag))
                         }
                         Toast.makeText(this@SignInActivity, "로그인 성공", Toast.LENGTH_SHORT).show()
                         val successintent= Intent(this@SignInActivity,MainActivity::class.java)

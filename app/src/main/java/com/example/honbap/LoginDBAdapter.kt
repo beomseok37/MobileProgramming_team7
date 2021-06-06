@@ -92,4 +92,15 @@ class LoginDBAdapter(val context: Context): SQLiteOpenHelper(context, DB_NAME, n
         db.close()
         return email
     }
+
+    fun getInfo():Int{
+        val strsql="select * from $TABLE_NAME;"
+        val db=readableDatabase
+        val cursor = db.rawQuery(strsql,null)
+        cursor.moveToFirst()
+        val info=cursor.getInt(0)
+        cursor.close()
+        db.close()
+        return info
+    }
 }
