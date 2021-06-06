@@ -95,6 +95,7 @@ class SingleFragment : Fragment() {
                         if(i.uid==num) {
                             var roomnick=i.nick
                             Room_list.add(Room(roomnick, room_code))
+                            adapter.notifyDataSetChanged()
                             break
 
                         }
@@ -102,7 +103,6 @@ class SingleFragment : Fragment() {
 
                 }
 
-                adapter.notifyDataSetChanged()
             }
 
             override fun onChildChanged(snapshot: DataSnapshot, previousChildName: String?) {
