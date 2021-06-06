@@ -15,9 +15,10 @@ class GroupFragment : Fragment() {
     lateinit var recyclerView: RecyclerView
     lateinit var adapter:RoomAdapter
 
+    lateinit var id:String
+    lateinit var nick:String
+
     var Room_list:ArrayList<Room> = ArrayList()
-
-
 
 
     override fun onCreateView(
@@ -27,6 +28,12 @@ class GroupFragment : Fragment() {
         Room_list.clear()
         initroom()
 
+
+        arguments?.let{
+            id=it.getString("id").toString()
+            nick=it.getString("nick").toString()
+
+        }
 
         val view=inflater.inflate(R.layout.fragment_group,container,false)
 
@@ -39,17 +46,17 @@ class GroupFragment : Fragment() {
 
                 val intent = Intent(requireActivity(),ChatActivity::class.java)
                 val mess =data.name+"에 오신것을 환영합니다."
-                intent.putExtra("data",data.firebase_position)
+                intent.putExtra("which_grouproom",data.firebase_position)
                 intent.putExtra("message",mess)
+                intent.putExtra("nick",nick)
+                intent.putExtra("id",id)
+
+
 
                 startActivity(intent)
 
-
-
-
-
             }
-            }
+        }
         recyclerView.adapter=adapter
 
 
