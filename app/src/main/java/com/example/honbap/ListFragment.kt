@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.OnBackPressedCallback
 import com.example.honbap.RestaurantFragment.Companion.datalist
 import com.google.android.gms.maps.model.LatLng
 
@@ -71,8 +72,10 @@ class ListFragment : Fragment() {
         bundle.putString("tel",data.tel)
         mapFragment.arguments = bundle
         activity?.supportFragmentManager!!.beginTransaction()
-            .addToBackStack(null)  //지도로 음식점 위치 확인하고 뒤로가기 버튼 누르면 다시 리스트로 돌아오게 함
+            .addToBackStack(null)
             .replace(R.id.frameLayout,mapFragment)
             .commit()
     }
+
+
 }

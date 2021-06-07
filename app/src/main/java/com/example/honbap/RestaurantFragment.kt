@@ -1,11 +1,13 @@
 package com.example.honbap
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.example.honbap.databinding.FragmentRestaurantBinding
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import io.grpc.InternalChannelz.id
 import org.json.JSONException
 import org.json.JSONObject
@@ -21,24 +23,24 @@ class RestaurantFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         loadInfo()
-        binding= FragmentRestaurantBinding.inflate(layoutInflater)
-        return binding.root
+        return inflater.inflate(R.layout.fragment_restaurant, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val fragment=activity?.supportFragmentManager!!.beginTransaction()
+        val fragment=childFragmentManager.beginTransaction()
         fragment.replace(R.id.resframeLayout,mapfrag)
         fragment.commit()
-        binding.listBtn.setOnClickListener {
+        val listBtn=view.findViewById<FloatingActionButton>(R.id.listBtn)
+        listBtn.setOnClickListener {
             if(!listfrag.isVisible) {
-                val fragment = activity?.supportFragmentManager!!.beginTransaction()
-                fragment.addToBackStack(null)
+                val fragment =childFragmentManager.beginTransaction()
                 fragment.replace(R.id.resframeLayout, listfrag)
+                fragment.addToBackStack(null)
                 fragment.commit()
             }
             else{
-                val fragment=activity?.supportFragmentManager!!.beginTransaction()
+                val fragment=childFragmentManager.beginTransaction()
                 fragment.replace(R.id.resframeLayout,mapfrag)
                 fragment.commit()
 
@@ -74,4 +76,5 @@ class RestaurantFragment : Fragment() {
         }
 
     }
+
 }
