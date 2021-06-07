@@ -154,6 +154,7 @@ class MapsFragment : Fragment(),PlacesListener {
     }
     override fun onPause() {
         super.onPause()
+        Log.i("info","pause")
         stopLocationUpdate()
     }
 
