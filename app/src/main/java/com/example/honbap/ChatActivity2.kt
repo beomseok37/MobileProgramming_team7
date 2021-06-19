@@ -30,7 +30,7 @@ class ChatActivity2 : AppCompatActivity() {
 
     lateinit var nick: String
     lateinit var id: String
-
+    lateinit var txt:String
     var black_user:ArrayList<Int> = ArrayList()
     var data: ArrayList<Message> = ArrayList()
     var room_code = ""
@@ -50,6 +50,7 @@ class ChatActivity2 : AppCompatActivity() {
         if(single_info!=null){
 
             val id1=id.toInt()
+
             val id2= single_info?.toInt()
 
             if (id1< id2!!)
@@ -61,6 +62,7 @@ class ChatActivity2 : AppCompatActivity() {
         }
 
         Toast.makeText(this,"1대1 채팅에 오신걸 환영합니다.",Toast.LENGTH_LONG).show( )
+        txt="black"+id+".txt"
         Firebase = FirebaseDatabase.getInstance()
         chatref = Firebase.getReference(room_code)
 
@@ -180,7 +182,7 @@ class ChatActivity2 : AppCompatActivity() {
                             if(flag==false) {
                                 black_user.add(data.id.toInt())
                                 val output =
-                                    PrintStream(openFileOutput("black.txt", MODE_APPEND))
+                                    PrintStream(openFileOutput(txt, MODE_APPEND))
 
                                 output.println(data.id)
                                 output.println(data.name)
@@ -219,7 +221,7 @@ class ChatActivity2 : AppCompatActivity() {
     fun read_black(){
 
         try {
-            val scan2 = Scanner(openFileInput("black.txt"))
+            val scan2 = Scanner(openFileInput(txt))
             readFileScan(scan2)
         }catch (e: Exception){
 

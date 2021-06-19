@@ -54,8 +54,12 @@ class MainActivity : AppCompatActivity() {
 
         id=intent.getStringExtra("id").toString()
 
+
         autologin()
         getuserid()
+        bundle= Bundle()
+        bundle.putString("id",id)
+        settingfrag.arguments = bundle
 
         initLocation()
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
@@ -66,6 +70,7 @@ class MainActivity : AppCompatActivity() {
         )
 
         binding.bottomNavigationView.selectedItemId=R.id.Setting
+
         changeFragment(settingfrag)
         binding.apply {
             bottomNavigationView.setOnNavigationItemSelectedListener {
@@ -91,6 +96,10 @@ class MainActivity : AppCompatActivity() {
                         changeFragment(resfrag)
                     }
                     R.id.Setting->{
+                        bundle= Bundle()
+                        bundle.putString("id",id)
+                        bundle.putString("nick",nick)
+                        settingfrag.arguments = bundle
                         changeFragment(settingfrag)
                     }
                 }

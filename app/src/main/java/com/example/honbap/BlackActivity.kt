@@ -18,10 +18,8 @@ import java.util.*
 class BlackActivity : AppCompatActivity() {
     lateinit var recyclerView: RecyclerView
     lateinit var adapter: BlackAdapter
+    lateinit var txt:String
 
-
-    lateinit var Firebase2: FirebaseDatabase
-    lateinit var chatref2: DatabaseReference
 
     var black_user:ArrayList<ublack> = ArrayList()
 
@@ -30,6 +28,8 @@ class BlackActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_black)
 
+        var id2= intent.getStringExtra("id").toString()
+        txt="black"+id2+".txt"
 
         recyclerView=findViewById(R.id.blackrecycler)
         init()
@@ -41,7 +41,7 @@ class BlackActivity : AppCompatActivity() {
         black_user.clear()
 
         try {
-            val scan = Scanner(openFileInput("black.txt"))
+            val scan = Scanner(openFileInput(txt))
             while(scan.hasNextLine()){
                 val id=scan.nextLine()
                 val nick=scan.nextLine()
@@ -64,10 +64,11 @@ class BlackActivity : AppCompatActivity() {
             override fun OnItemClick(holder: BlackAdapter.ViewHolder, view: View, data: ublack, position: Int) {
 
                 black_user.remove(data)
-                var file = File("/data/data/com.example.honbap/files/black.txt")
+                var path ="/data/data/com.example.honbap/files/"+txt
+                var file = File(path)
                 file.delete()
 
-                val output= PrintStream(openFileOutput("black.txt", Context.MODE_APPEND))
+                val output= PrintStream(openFileOutput(txt, Context.MODE_APPEND))
 
                 for(i in black_user){
                     output.println(i.uid)

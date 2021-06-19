@@ -28,6 +28,7 @@ class ChatActivity : AppCompatActivity() {
     lateinit var Firebase: FirebaseDatabase
     lateinit var chatref: DatabaseReference
 
+    lateinit var txt:String
     lateinit var id:String
     lateinit var nick:String
 
@@ -46,6 +47,7 @@ class ChatActivity : AppCompatActivity() {
             var mess=intent.getStringExtra("message")
             Toast.makeText(this,mess,Toast.LENGTH_LONG).show( )
             id= intent.getStringExtra("id").toString()
+            txt="black"+id+".txt"
             nick= intent.getStringExtra("nick").toString()
 
         }
@@ -177,7 +179,7 @@ class ChatActivity : AppCompatActivity() {
                         if(flag==false) {
                             black_user.add(data.id.toInt())
                             val output =
-                                PrintStream(openFileOutput("black.txt", Context.MODE_APPEND))
+                                PrintStream(openFileOutput(txt, Context.MODE_APPEND))
 
                             output.println(data.id)
                             output.println(data.name)
@@ -224,7 +226,7 @@ class ChatActivity : AppCompatActivity() {
     fun read_black(){
 
         try {
-            val scan2 = Scanner(openFileInput("black.txt"))
+            val scan2 = Scanner(openFileInput(txt))
             readFileScan(scan2)
         }catch (e: Exception){
 

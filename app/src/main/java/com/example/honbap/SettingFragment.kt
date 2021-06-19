@@ -24,6 +24,8 @@ class SettingFragment : Fragment() {
     private lateinit var radioGroup: RadioGroup
     private lateinit var button: Button
 
+    lateinit var id:String
+    lateinit var nick:String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -34,6 +36,13 @@ class SettingFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+
+        arguments?.let{
+            id=it.getString("id").toString()
+            nick=it.getString("nick").toString()
+
+        }
+
         val intent = requireActivity() as MainActivity
         binding = FragmentSettingBinding.inflate(layoutInflater)
         LoginDBHelper = LoginDBAdapter(intent)
@@ -106,8 +115,12 @@ class SettingFragment : Fragment() {
                     button = v.findViewById(R.id.joinbtn)
                     val black_btn =v.findViewById<Button>(R.id.black)
                     black_btn.setOnClickListener {
+
+
                         val intent =Intent(requireActivity(),BlackActivity::class.java)
+                        intent.putExtra("id",id)
                         startActivity(intent)
+
                     }
 
                     button.setOnClickListener {

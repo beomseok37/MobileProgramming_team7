@@ -28,6 +28,7 @@ class SingleFragment : Fragment() {
 
     lateinit var id:String
     lateinit var nick:String
+    lateinit var txt:String
 
     var Room_list:ArrayList<Room> = ArrayList()
     var user_list: ArrayList<uinfo> = ArrayList()
@@ -48,14 +49,12 @@ class SingleFragment : Fragment() {
 
         arguments?.let{
             id=it.getString("id").toString()
+            txt="black"+id+".txt"
             nick=it.getString("nick").toString()
         }
 
 
         //initroom()
-
-
-
 
         val view=inflater.inflate(R.layout.fragment_single,container,false)
 
@@ -183,7 +182,7 @@ class SingleFragment : Fragment() {
     fun read_black(){
 
         try {
-            val scan2 = Scanner(requireActivity().openFileInput("black.txt"))
+            val scan2 = Scanner(requireActivity().openFileInput(txt))
             readFileScan(scan2)
         }catch (e: Exception){
 
