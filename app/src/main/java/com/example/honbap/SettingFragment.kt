@@ -67,6 +67,7 @@ class SettingFragment : Fragment() {
                         radioButton.isChecked = true
                     }
                 }
+
 //                for(i in 0..(auto-1)){
 //
 //                }
@@ -114,7 +115,7 @@ class SettingFragment : Fragment() {
                             Toast.makeText(intent,"나이가 빠졌습니다", Toast.LENGTH_SHORT).show()
                             Log.i("join","age")
                         }
-                        else if(radioButton==null){
+                        else if(radioGroup==null){
                             Toast.makeText(intent,"성별이 빠졌습니다", Toast.LENGTH_SHORT).show()
                             Log.i("join","sex")
                         }

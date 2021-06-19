@@ -5,8 +5,10 @@ import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.Fragment
 import com.example.honbap.databinding.ActivityMainBinding
 import com.google.firebase.database.*
+import kotlin.math.sin
 
 class MainActivity : AppCompatActivity() {
 
@@ -42,53 +44,45 @@ class MainActivity : AppCompatActivity() {
 
 
 
-
-
+            binding.bottomNavigationView.selectedItemId=R.id.Setting
+            changeFragment(settingfrag)
             binding.apply {
+                bottomNavigationView.setOnNavigationItemSelectedListener {
+                   when(it.itemId){
+                       R.id.Groupchat->{
+                          val frag = supportFragmentManager.beginTransaction()
+                           bundle= Bundle()
+                           bundle.putString("id",id)
+                           bundle.putString("nick",nick)
+                           groupfrag.arguments = bundle
+                           changeFragment(groupfrag)
 
-
-                Groupchat.setOnClickListener {
-
-                    val frag = supportFragmentManager.beginTransaction()
-                    bundle= Bundle()
-                    bundle.putString("id",id)
-                    bundle.putString("nick",nick)
-                    groupfrag.arguments = bundle
-                    frag.replace(R.id.frameLayout, groupfrag)
-                    frag.commit()
-
-
+                       }
+                       R.id.Singlechat->{
+                           bundle= Bundle()
+                           bundle.putString("id",id)
+                           bundle.putString("nick",nick)
+                           singlefrag.arguments = bundle
+                           changeFragment(singlefrag)
+                       }
+                       R.id.Map->{
+                           changeFragment(resfrag)
+                       }
+                       R.id.Setting->{
+                           changeFragment(settingfrag)
+                       }
+                   }
+                    true
                 }
 
-                Singlechat.setOnClickListener {
-
-                    val frag = supportFragmentManager.beginTransaction()
-                    bundle= Bundle()
-                    bundle.putString("id",id)
-                    bundle.putString("nick",nick)
-                    singlefrag.arguments = bundle
-                    frag.replace(R.id.frameLayout, singlefrag)
-                    frag.commit()
-
-                }
-
-                Map.setOnClickListener {
-
-                    val frag = supportFragmentManager.beginTransaction()
-                    frag.replace(R.id.frameLayout, resfrag)
-                    frag.commit()
-
-                }
-
-                Setting.setOnClickListener {
-                    val frag = supportFragmentManager.beginTransaction()
-                    frag.replace(R.id.frameLayout, settingfrag)
-                    frag.commit()
-
-                }
             }
 
 
+    }
+    fun changeFragment(fragment:Fragment) {
+        supportFragmentManager.beginTransaction()
+            .replace(R.id.frameLayout,fragment)
+            .commit()
     }
     fun autologin(){
         if(LoginDBHelper.loginfun()>=2){
