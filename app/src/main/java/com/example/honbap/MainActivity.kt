@@ -3,16 +3,14 @@ package com.example.honbap
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.honbap.databinding.ActivityMainBinding
-import com.google.firebase.database.DataSnapshot
-import com.google.firebase.database.DatabaseError
-import com.google.firebase.database.FirebaseDatabase
-import com.google.firebase.database.ValueEventListener
+import com.google.firebase.database.*
 
 class MainActivity : AppCompatActivity() {
 
-    lateinit var binding: com.example.honbap.databinding.ActivityMainBinding
+    lateinit var binding: ActivityMainBinding
     val groupfrag=GroupFragment()
     val singlefrag=SingleFragment()
     val settingfrag=SettingFragment()

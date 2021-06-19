@@ -7,39 +7,52 @@
     tools:context=".ChatActivity2">
 
 
-    <Button
-        android:id="@+id/send"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="16dp"
-        android:layout_marginBottom="16dp"
-        android:text="Button"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/ChatView2"
-        app:layout_constraintVertical_bias="1.0" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/ChatView2"
-        android:layout_width="411dp"
-        android:layout_height="662dp"
+        android:layout_width="410dp"
+        android:layout_height="0dp"
         android:layout_marginStart="28dp"
-        android:layout_marginTop="0dp"
+        android:layout_marginTop="4dp"
         android:layout_marginEnd="28dp"
+        android:layout_marginBottom="14dp"
+        app:layout_constraintBottom_toTopOf="@+id/linearLayout"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.509"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent">
+    </androidx.recyclerview.widget.RecyclerView>
 
-    <EditText
-        android:id="@+id/context2"
-        android:layout_width="257dp"
-        android:layout_height="39dp"
-        android:layout_marginStart="16dp"
+    <LinearLayout
+        android:id="@+id/linearLayout"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
         android:layout_marginBottom="16dp"
-        android:ems="10"
-        android:inputType="textPersonName"
+        android:orientation="horizontal"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ChatView2">
+
+        <EditText
+            android:id="@+id/context2"
+            android:layout_width="254dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="20dp"
+            android:layout_marginStart="28dp"
+            android:layout_marginBottom="16dp"
+            android:ems="10"
+            android:hint="Message"
+            android:inputType="textPersonName" />
+
+        <Button
+            android:id="@+id/send"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="15dp"
+            android:layout_marginBottom="16dp"
+            android:text="전송" />
+    </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

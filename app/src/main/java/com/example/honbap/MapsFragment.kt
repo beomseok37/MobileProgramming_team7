@@ -16,7 +16,6 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.core.app.ActivityCompat
-import com.example.honbap.databinding.FragmentMapsBinding
 import com.google.android.gms.location.*
 import com.google.android.gms.location.places.PlaceReport
 import com.google.android.gms.maps.*
@@ -97,8 +96,8 @@ class MapsFragment : Fragment(),PlacesListener {
         fusedLocationProviderClient= LocationServices.getFusedLocationProviderClient(context!!)
 
         locationRequest= LocationRequest.create().apply {
-            interval=30000
-            fastestInterval=20000
+            interval=15000
+            fastestInterval=10000
             priority=LocationRequest.PRIORITY_HIGH_ACCURACY
         }
 
@@ -154,7 +153,6 @@ class MapsFragment : Fragment(),PlacesListener {
     }
     override fun onPause() {
         super.onPause()
-        Log.i("info","pause")
         stopLocationUpdate()
     }
 
