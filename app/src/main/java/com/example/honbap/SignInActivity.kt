@@ -2,7 +2,6 @@ package com.example.honbap
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
@@ -34,7 +33,6 @@ class SignInActivity : AppCompatActivity() {
                 //자동로그인
                 val successintent = Intent(this,MainActivity::class.java)
                 val temp=LoginDBHelper.logininfo()
-                Log.i("useremail",temp.UserEmail)
                 //successintent.putExtra("logininfo",LoginDBHelper.logininfo())
                 startActivity(successintent)
                 finish()
@@ -126,8 +124,6 @@ class SignInActivity : AppCompatActivity() {
                     val tempemail=snapshot.child("$i").child("userEmail").value.toString()
                     val temppassword=snapshot.child("$i").child("userPassword").value.toString()
                     val usernick=snapshot.child("$i").child("userNickname").value.toString()
-                    Log.i("email",tempemail)
-                    Log.i("password",temppassword)
                     if(userid==tempemail && userpassword==temppassword){
                         id=i
                         nick=usernick
@@ -139,10 +135,8 @@ class SignInActivity : AppCompatActivity() {
                 if(notdialog) {
                     if (flag) {
                         if(LoginDBHelper.loginbefore()){
-                            Log.i("login","update")
                             LoginDBHelper.updateProduct(UserInDB(tempid,userid,userpassword,saveemailflag,autologinflag))
                         }else{
-                            Log.i("login","insert")
                             LoginDBHelper.insertProduct(UserInDB(tempid,userid,userpassword,saveemailflag,autologinflag))
                         }
                         Toast.makeText(this@SignInActivity, "로그인 성공", Toast.LENGTH_SHORT).show()

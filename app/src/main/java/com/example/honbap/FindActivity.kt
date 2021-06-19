@@ -1,7 +1,6 @@
 package com.example.honbap
 
 import android.os.Bundle
-import android.util.Log
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import com.example.honbap.databinding.ActivityFindBinding
@@ -63,7 +62,6 @@ class FindActivity : AppCompatActivity() {
             override fun onDataChange(snapshot: DataSnapshot) {
                 for(i in 0..(count-1)){
                     val tempemail=snapshot.child("$i").child("userEmail").value.toString()
-                    Log.i("email",tempemail)
                     if(userid==tempemail){
                         flag=true
                         break
@@ -88,7 +86,6 @@ class FindActivity : AppCompatActivity() {
                 for(i in 0..(count-1)){
                     val tempemail=snapshot.child("$i").child("userEmail").value.toString()
                     val temppassword=snapshot.child("$i").child("userPassword").value.toString()
-                    Log.i("email",temppassword)
                     if(userid==tempemail){
                         flag=true
                         showpassword=temppassword

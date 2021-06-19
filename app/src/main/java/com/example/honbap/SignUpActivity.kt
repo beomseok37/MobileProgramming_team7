@@ -86,36 +86,27 @@ class SignUpActivity : AppCompatActivity() {
             joinbtn.setOnClickListener {
                 if(!certificateflag){
                     Toast.makeText(this@SignUpActivity,"이메일이 인증되지 않았습니다.",Toast.LENGTH_SHORT).show()
-                    Log.i("join","email")
                 }
                 else if(passwordedittext.text.isEmpty()){
                     Toast.makeText(this@SignUpActivity,"비밀번호가 빠졌습니다",Toast.LENGTH_SHORT).show()
-                    Log.i("join","password")
                 }
                 else if(passwordconfirmedittext.text.isEmpty()){
                     Toast.makeText(this@SignUpActivity,"비밀번호 확인이 빠졌습니다",Toast.LENGTH_SHORT).show()
-                    Log.i("join","passwordconfirm")
                 }
                 else if(passwordedittext.text.toString()!=passwordconfirmedittext.text.toString()){
                     Toast.makeText(this@SignUpActivity,"비밀번호와 비밀번호 확인이 일치하지 않습니다",Toast.LENGTH_SHORT).show()
-                    Log.i("join","passwordonemoretime")
                 }
                 else if(ageedittext.text.isEmpty()){
                     Toast.makeText(this@SignUpActivity,"나이가 빠졌습니다",Toast.LENGTH_SHORT).show()
-                    Log.i("join","age")
                 }
                 else if(usersex==null){
                     Toast.makeText(this@SignUpActivity,"성별이 빠졌습니다",Toast.LENGTH_SHORT).show()
-                    Log.i("join","sex")
                 }
                 else if(nickname.text.isEmpty()){
                     Toast.makeText(this@SignUpActivity,"닉네임이 빠졌습니다",Toast.LENGTH_SHORT).show()
-                    Log.i("join","nickname")
                 }
                 else {
                     auth.currentUser?.reload()
-
-                    Log.i("join","else")
                     useremail = emailtextinputedittext.text.toString()
                     userpassword = passwordedittext.text.toString()
                     userage = ageedittext.text.toString().toInt()
