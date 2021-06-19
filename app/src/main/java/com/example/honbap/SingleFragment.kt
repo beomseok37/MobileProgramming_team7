@@ -5,10 +5,12 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.database.*
+import java.lang.Exception
 import java.util.*
 import kotlin.collections.ArrayList
 
@@ -36,6 +38,7 @@ class SingleFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+
         black_user.clear()
         read_black()
         user_list.clear()
@@ -49,7 +52,7 @@ class SingleFragment : Fragment() {
         }
 
 
-        initroom()
+        //initroom()
 
 
 
@@ -68,6 +71,7 @@ class SingleFragment : Fragment() {
                 intent.putExtra("myid",id)
                 intent.putExtra("which_singleroom",data.firebase_position)
                 startActivity(intent)
+
 
             }
         }
@@ -195,6 +199,17 @@ class SingleFragment : Fragment() {
         }
         scan.close()
     }
+
+    override fun onResume() {
+        super.onResume()
+        black_user.clear()
+        read_black()
+        Room_list.clear()
+        initroom()
+        adapter.notifyDataSetChanged()
+
+    }
+
 
 
 }

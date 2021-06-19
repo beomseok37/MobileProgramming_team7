@@ -161,24 +161,21 @@ class ChatActivity : AppCompatActivity() {
                     })
 
                     dialog.setNeutralButton("차단하기", DialogInterface.OnClickListener { dialog, which ->
-
-//                        val intent = Intent(this@ChatActivity, ChatActivity2::class.java)
-//                        intent.putExtra("other_id", data.id)
-//                        intent.putExtra("other_nick", data.name)
-//                        intent.putExtra("mynick", nick)
-//                        intent.putExtra("myid", id)
-//
-//                        addSingleChatinfo(id, data.id)
-
                         var flag= false
                        for(i in black_user){
 
                           if(i==data.id.toInt()) {
+                              Toast.makeText(
+                                  this@ChatActivity,
+                                  "이미 차단된 사용자입니다.",
+                                  Toast.LENGTH_LONG
+                              ).show()
                               flag=true
                               break;
                           }
                        }
                         if(flag==false) {
+                            black_user.add(data.id.toInt())
                             val output =
                                 PrintStream(openFileOutput("black.txt", Context.MODE_APPEND))
 

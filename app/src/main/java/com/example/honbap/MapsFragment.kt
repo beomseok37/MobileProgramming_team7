@@ -37,7 +37,7 @@ import java.lang.reflect.InvocationTargetException
 
 
 class MapsFragment : Fragment(),PlacesListener {
-    var loc=LatLng(37.5408, 127.0793) //초기위치-건국대학교
+    lateinit var loc:LatLng
     lateinit var fusedLocationProviderClient: FusedLocationProviderClient
     lateinit var locationRequest: LocationRequest
     lateinit var locationCallback: LocationCallback
@@ -93,7 +93,7 @@ class MapsFragment : Fragment(),PlacesListener {
 
 
     fun initLocation(){
-        fusedLocationProviderClient= LocationServices.getFusedLocationProviderClient(context!!)
+       fusedLocationProviderClient= LocationServices.getFusedLocationProviderClient(context!!)
 
         locationRequest= LocationRequest.create().apply {
             interval=15000

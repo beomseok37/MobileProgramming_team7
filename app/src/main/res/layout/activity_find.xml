@@ -19,7 +19,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="50dp"
-        android:background="#CFCFCF"
+        android:paddingTop="20dp"
+        android:paddingBottom="20dp"
+        android:background="#00603D"
+        android:textColor="@color/white"
         android:gravity="center"
         android:text="아이디/비밀번호 찾기"
         android:textSize="20sp"
@@ -28,62 +31,63 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="40dp"
         android:orientation="horizontal"
-        android:layout_marginTop="20dp">
-
-        <TextView
-            android:id="@+id/textView11"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:text="이메일" />
+        android:layout_marginHorizontal="40dp"
+        android:layout_gravity="center">
 
         <EditText
             android:id="@+id/findemail"
-            android:layout_width="wrap_content"
+            android:hint="honbap@konkuk.ac.kr"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
             android:ems="10" />
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:layout_marginHorizontal="40dp"
         android:orientation="horizontal"
-        android:gravity="center"
-        android:layout_marginTop="30dp">
-
-        <Button
-            android:id="@+id/confirmIDbtn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginHorizontal="10dp"
-            android:text="아이디 확인" />
-
-        <Button
-            android:id="@+id/confirmPasswordbtn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginHorizontal="10dp"
-            android:text="비밀번호 찾기" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_marginTop="25dp"
         android:layout_gravity="center">
 
         <Button
-            android:id="@+id/returnbtn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:id="@+id/confirmIDbtn"
+            android:layout_width="0dp"
             android:layout_weight="1"
-            android:text="돌아가기" />
+            android:layout_height="wrap_content"
+            android:text="아이디 확인"
+            android:textColor="@color/white"
+            android:textStyle="bold"
+            android:background="#00603D"
+            android:layout_marginRight="10dp"
+            />
+
+        <Button
+            android:id="@+id/confirmPasswordbtn"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:text="비밀번호 찾기"
+            android:textColor="@color/white"
+            android:textStyle="bold"
+            android:background="#00603D"
+            android:layout_marginLeft="10dp"/>
     </LinearLayout>
+<!--    <LinearLayout-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:orientation="horizontal"-->
+<!--        android:layout_marginTop="25dp"-->
+<!--        android:layout_gravity="center">-->
+
+<!--        <Button-->
+<!--            android:id="@+id/returnbtn"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_weight="1"-->
+<!--            android:text="돌아가기" />-->
+<!--    </LinearLayout>-->
 
 </LinearLayout>
