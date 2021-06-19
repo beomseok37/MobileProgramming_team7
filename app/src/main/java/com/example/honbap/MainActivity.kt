@@ -85,6 +85,7 @@ class MainActivity : AppCompatActivity() {
                         bundle.putString("nick",nick)
                         singlefrag.arguments = bundle
                         changeFragment(singlefrag)
+
                     }
                     R.id.Map->{
                         changeFragment(resfrag)

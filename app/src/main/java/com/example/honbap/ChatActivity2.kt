@@ -1,17 +1,25 @@
 package com.example.honbap
 
+import android.content.DialogInterface
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.FragmentTransaction
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.database.*
+import java.io.PrintStream
+import java.lang.Exception
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
+import java.util.*
+import kotlin.collections.ArrayList
 
 class ChatActivity2 : AppCompatActivity() {
 
@@ -23,7 +31,7 @@ class ChatActivity2 : AppCompatActivity() {
     lateinit var nick: String
     lateinit var id: String
 
-
+    var black_user:ArrayList<Int> = ArrayList()
     var data: ArrayList<Message> = ArrayList()
     var room_code = ""
 
@@ -57,6 +65,7 @@ class ChatActivity2 : AppCompatActivity() {
         chatref = Firebase.getReference(room_code)
 
         initrecyclerview()
+        read_black()
 
         val button2 = findViewById<Button>(R.id.send)
         button2.setOnClickListener {
@@ -138,6 +147,60 @@ class ChatActivity2 : AppCompatActivity() {
         adapter.itemClickListener=object :ChatAdapter.OnItemClickListener{
             override fun OnItemClick(holder: ChatAdapter.ViewHolder, view: View, data: Message, position: Int) {
 
+                    if (id != data.id) {
+                        val dialog = AlertDialog.Builder(this@ChatActivity2)
+                        dialog.setTitle("차단하기")
+                        dialog.setMessage(data.name + "님 을 차단하시겠습니까?")
+                        dialog.setIcon(R.drawable.ic_baseline_connect_without_contact_24)
+                        dialog.setPositiveButton("취소", DialogInterface.OnClickListener { dialog, which ->
+                            Toast.makeText(
+                                this@ChatActivity2,
+                                "취소하였습니다.",
+                                Toast.LENGTH_LONG
+                            ).show()
+                        })
+
+                        dialog.setNeutralButton("차단하기", DialogInterface.OnClickListener { dialog, which ->
+
+//
+
+                            var flag= false
+                            for(i in black_user){
+
+                                if(i==data.id.toInt()) {
+                                    Toast.makeText(
+                                        this@ChatActivity2,
+                                         "이미 차단된 사용자입니다.",
+                                        Toast.LENGTH_LONG
+                                    ).show()
+                                    flag=true
+                                    break;
+                                }
+                            }
+                            if(flag==false) {
+                                black_user.add(data.id.toInt())
+                                val output =
+                                    PrintStream(openFileOutput("black.txt", MODE_APPEND))
+
+                                output.println(data.id)
+                                output.println(data.name)
+                                output.close()
+
+                                Toast.makeText(
+                                    this@ChatActivity2,
+                                    data.name + "을 차단하였습니다.",
+                                    Toast.LENGTH_LONG
+                                ).show()
+
+
+                            }
+                        })
+
+                        dialog.show()
+
+
+                    }
+
 
 
             }
@@ -150,4 +213,25 @@ class ChatActivity2 : AppCompatActivity() {
 
     }
     // 리사이클러뷰
+
+
+
+    fun read_black(){
+
+        try {
+            val scan2 = Scanner(openFileInput("black.txt"))
+            readFileScan(scan2)
+        }catch (e: Exception){
+
+        }
+
+
+    }
+    fun readFileScan(scan: Scanner){
+        while(scan.hasNextLine()){
+            val id=scan.nextLine()
+            black_user.add(id.toInt())
+        }
+        scan.close()
+    }
 }
