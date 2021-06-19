@@ -9,6 +9,9 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.database.*
+import java.lang.Exception
+import java.util.*
+import kotlin.collections.ArrayList
 
 
 class SingleFragment : Fragment() {
@@ -27,12 +30,15 @@ class SingleFragment : Fragment() {
 
     var Room_list:ArrayList<Room> = ArrayList()
     var user_list: ArrayList<uinfo> = ArrayList()
+    var black_user:ArrayList<Int> = ArrayList()
 
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+
+        read_black()
         user_list.clear()
         getuserid()
         Room_list.clear()
@@ -45,6 +51,7 @@ class SingleFragment : Fragment() {
 
 
         initroom()
+
 
 
 
@@ -85,15 +92,29 @@ class SingleFragment : Fragment() {
                 var num =snapshot.key.toString()
                 var room_code=""
 
+                var flag= false
+                for(i in black_user){
+
+                    if(i.toString()==num) {
+                        flag=true
+                        break;
+                    }
+                }
+
                 if(num!=id) {
                     if (num.toInt() < id.toInt())
                         room_code = "SingleChat/" + num + "_" + id
                     else
                         room_code = "SingleChat/" + id + "_" + num
 
+
+
                     for(i in user_list){
                         if(i.uid==num) {
                             var roomnick=i.nick
+                            if(flag==true){
+                                roomnick+=" [차단된 사용자]"
+                            }
                             Room_list.add(Room(roomnick, room_code))
                             adapter.notifyDataSetChanged()
                             break
@@ -154,6 +175,26 @@ class SingleFragment : Fragment() {
 
         })
 
+    }
+
+    fun read_black(){
+
+        try {
+            val scan2 = Scanner(requireActivity().openFileInput("black.txt"))
+            readFileScan(scan2)
+        }catch (e: Exception){
+
+        }
+
+
+    }
+    fun readFileScan(scan: Scanner){
+        while(scan.hasNextLine()){
+            val id=scan.nextLine()
+            val nick=scan.nextLine()
+            black_user.add(id.toInt())
+        }
+        scan.close()
     }
 
 

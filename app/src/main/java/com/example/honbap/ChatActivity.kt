@@ -1,5 +1,6 @@
 package com.example.honbap
 
+import android.content.Context
 import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
@@ -13,8 +14,12 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.database.*
+import java.io.PrintStream
+import java.lang.Exception
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
+import java.util.*
+import kotlin.collections.ArrayList
 
 class ChatActivity : AppCompatActivity() {
 
@@ -27,6 +32,7 @@ class ChatActivity : AppCompatActivity() {
     lateinit var nick:String
 
     var data: ArrayList<Message> = ArrayList()
+    var black_user:ArrayList<Int> = ArrayList()
     var room_code=""
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -51,6 +57,7 @@ class ChatActivity : AppCompatActivity() {
 
 
         initrecyclerview()
+        read_black()
 
 
         val button = findViewById<Button>(R.id.send)
@@ -163,8 +170,29 @@ class ChatActivity : AppCompatActivity() {
 //
 //                        addSingleChatinfo(id, data.id)
 
-                        Toast.makeText(this@ChatActivity,data.name+"을 차단하였습니다.",Toast.LENGTH_LONG).show()
+                        var flag= false
+                       for(i in black_user){
 
+                          if(i==data.id.toInt()) {
+                              flag=true
+                              break;
+                          }
+                       }
+                        if(flag==false) {
+                            val output =
+                                PrintStream(openFileOutput("black.txt", Context.MODE_APPEND))
+
+                            output.println(data.id)
+                            output.println(data.name)
+                            output.close()
+
+                            Toast.makeText(
+                                this@ChatActivity,
+                                data.name + "을 차단하였습니다.",
+                                Toast.LENGTH_LONG
+                            ).show()
+
+                        }
                     })
 
 
@@ -195,6 +223,24 @@ class ChatActivity : AppCompatActivity() {
         var id_2=chatref.child(id2)
         id_2.child(id1).setValue("true")
 
+    }
+    fun read_black(){
+
+        try {
+            val scan2 = Scanner(openFileInput("black.txt"))
+            readFileScan(scan2)
+        }catch (e: Exception){
+
+        }
+
+
+    }
+    fun readFileScan(scan:Scanner){
+        while(scan.hasNextLine()){
+            val id=scan.nextLine()
+            black_user.add(id.toInt())
+        }
+        scan.close()
     }
 
 }
