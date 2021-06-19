@@ -62,6 +62,7 @@ class ChatActivity2 : AppCompatActivity() {
         button2.setOnClickListener {
             send()
 
+            recyclerView.scrollToPosition(adapter.itemCount-1)
             var imm: InputMethodManager?=null
             imm=getSystemService(android.content.Context.INPUT_METHOD_SERVICE) as InputMethodManager
             imm.hideSoftInputFromWindow(button2.windowToken,0)
@@ -84,6 +85,7 @@ class ChatActivity2 : AppCompatActivity() {
                 data.add(Message(name,message,user_id,time))
 
                 adapter.notifyDataSetChanged()
+                recyclerView.scrollToPosition(adapter.itemCount-1)
 
             }
 

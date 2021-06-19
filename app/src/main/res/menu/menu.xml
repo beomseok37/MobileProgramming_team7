@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+  <item
+     android:id="@+id/Groupchat"
+      android:icon="@drawable/ic_baseline_groups_24"
+      app:showAsAction="ifRoom"
+      android:enabled="true"
+      android:title="Groupchat" />
+    <item
+        android:id="@+id/Singlechat"
+        android:icon="@drawable/ic_baseline_chat_24"
+        app:showAsAction="ifRoom"
+        android:enabled="true"
+        android:title="Singlechat" />
+    <item
+        android:id="@+id/Map"
+        app:showAsAction="ifRoom"
+        android:icon="@drawable/ic_baseline_restaurant_24"
+        android:enabled="true"
+        android:title="Map" />
+    <item
+        android:id="@+id/Setting"
+        app:showAsAction="ifRoom"
+        android:enabled="true"
+        android:iconTint="#006600"
+        android:icon="@drawable/ic_baseline_settings_24"
+        android:title="Setting" />
+
+</menu>

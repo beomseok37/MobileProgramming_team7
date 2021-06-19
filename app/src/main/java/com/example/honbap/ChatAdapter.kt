@@ -1,12 +1,21 @@
 package com.example.honbap
 
+import android.graphics.Color
+import android.graphics.PorterDuff
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import kotlin.random.Random
 
 class ChatAdapter (val items:ArrayList<Message>,val id:String): RecyclerView.Adapter<ChatAdapter.ViewHolder>() {
+
+    val r =Random
+
+    val mycolor=Color.rgb(r.nextInt(255),r.nextInt(255),r.nextInt(255))
+
 
     interface OnItemClickListener {
         fun OnItemClick(holder: ViewHolder, view: View, data: Message, position: Int)
@@ -89,12 +98,14 @@ class ChatAdapter (val items:ArrayList<Message>,val id:String): RecyclerView.Ada
             val mname: TextView = holder.itemView.findViewById(R.id.my_name)
             val mmessage: TextView = holder.itemView.findViewById(R.id.my_msg)
             val mtime: TextView = holder.itemView.findViewById(R.id.my_time)
+           val img= holder.itemView.findViewById<ImageView>(R.id.my_imageView)
 
 
-
+            img.setColorFilter(mycolor,PorterDuff.Mode.SRC_IN)
             mname.text =items[position].name
             mmessage.text=items[position].message
             mtime.text=items[position].time
+
 
 
         }
@@ -104,6 +115,7 @@ class ChatAdapter (val items:ArrayList<Message>,val id:String): RecyclerView.Ada
             val oname: TextView = holder.itemView.findViewById(R.id.other_name)
             val omessage: TextView = holder.itemView.findViewById(R.id.other_msg)
             val otime: TextView = holder.itemView.findViewById(R.id.other_time)
+           val img= holder.itemView.findViewById<ImageView>(R.id.other_imageView)
 
 
             oname.text = items[position].name
