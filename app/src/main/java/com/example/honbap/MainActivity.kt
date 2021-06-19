@@ -155,16 +155,16 @@ class MainActivity : AppCompatActivity() {
                 konkuk.longitude=127.0793
 
                 val loc=Location(LocationManager.GPS_PROVIDER)
-                loc.latitude=p0.lastLocation.latitude
-                loc.longitude=p0.lastLocation.longitude
+                loc.latitude=p0.locations[p0.locations.size-1].latitude
+                loc.longitude=p0.locations[p0.locations.size-1].longitude
                 val distance=loc.distanceTo(konkuk)
                 val dis2 =distance/1000
                 if(distance>4000){
                     val dialog = AlertDialog.Builder(this@MainActivity)
                     dialog.setTitle("거리 초과")
-                    dialog.setMessage("건국대로부터 $dis2 km 떨어져있습니다.")
+                    dialog.setMessage("건국대로부터 {$dis2}km 떨어져있습니다.")
                     dialog.setIcon(R.drawable.ic_baseline_place_24)
-                    dialog.setNegativeButton("무시후 계속사용", DialogInterface.OnClickListener { dialog, which ->
+                    dialog.setNegativeButton("무시 후 계속 사용", DialogInterface.OnClickListener { dialog, which ->
 
                     })
                     dialog.setPositiveButton("종료", DialogInterface.OnClickListener { dialog, which ->
