@@ -153,6 +153,7 @@ class SettingFragment : Fragment() {
 
                             val addauto = rdb.updateChildren(hashmap)
                             Log.i("finish","finish")
+                            Toast.makeText(intent,"저장완료", Toast.LENGTH_SHORT).show()
 
                             //finish()
                         }
