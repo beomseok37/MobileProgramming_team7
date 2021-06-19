@@ -191,6 +191,7 @@ class SingleFragment : Fragment() {
     fun readFileScan(scan: Scanner){
         while(scan.hasNextLine()){
             val id=scan.nextLine()
+            val nick=scan.nextLine()
             black_user.add(id.toInt())
         }
         scan.close()

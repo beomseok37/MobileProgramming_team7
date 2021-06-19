@@ -1,15 +1,26 @@
 package com.example.honbap
 
+import android.Manifest
+import android.content.DialogInterface
 import android.content.Intent
+import android.content.pm.PackageManager
+import android.location.Location
+import android.location.LocationManager
 import android.os.Bundle
+import android.os.Looper
 import android.util.Log
+import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityCompat
 import androidx.fragment.app.Fragment
 import com.example.honbap.databinding.ActivityMainBinding
+import com.google.android.gms.location.*
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
+import com.google.type.LatLng
 
 class MainActivity : AppCompatActivity() {
 
@@ -19,6 +30,10 @@ class MainActivity : AppCompatActivity() {
     val settingfrag=SettingFragment()
     val resfrag= RestaurantFragment()
     lateinit var LoginDBHelper: LoginDBAdapter
+
+    lateinit var fusedLocationProviderClient: FusedLocationProviderClient
+    lateinit var locationRequest: LocationRequest
+    lateinit var locationCallback: LocationCallback
 
     lateinit var id:String
     lateinit var nick:String
@@ -42,8 +57,13 @@ class MainActivity : AppCompatActivity() {
         autologin()
         getuserid()
 
-
-
+        initLocation()
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            return
+        }
+        fusedLocationProviderClient.requestLocationUpdates(
+                locationRequest,locationCallback, Looper.getMainLooper()
+        )
 
         binding.bottomNavigationView.selectedItemId=R.id.Setting
         changeFragment(settingfrag)
@@ -95,16 +115,16 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    fun getuserid(){
+    fun getuserid() {
         Firebase = FirebaseDatabase.getInstance()
-        val myref=Firebase.getReference()
+        val myref = Firebase.getReference()
 
-        myref.addValueEventListener(object:ValueEventListener{
+        myref.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
-                val test =snapshot.child("information")
+                val test = snapshot.child("information")
 
-                for(ds in test.children){
-                    if(ds.key==id) {
+                for (ds in test.children) {
+                    if (ds.key == id) {
                         nick = ds.child("userNickname").value as String
                         flag = true
                     }
@@ -116,11 +136,48 @@ class MainActivity : AppCompatActivity() {
             }
 
         })
-
-
-
-
-
-
     }
+
+    fun initLocation() {
+        fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this)
+
+        locationRequest = LocationRequest.create().apply {
+            interval = 15000
+            fastestInterval = 15000
+            priority = LocationRequest.PRIORITY_HIGH_ACCURACY
+        }
+         locationCallback=object : LocationCallback() {
+            override fun onLocationResult(p0: LocationResult) {
+                super.onLocationResult(p0)
+                //val konkuk=LatLng(37.5408, 127.0793)
+                val konkuk=Location(LocationManager.GPS_PROVIDER)
+                konkuk.latitude=37.5408
+                konkuk.longitude=127.0793
+
+                val loc=Location(LocationManager.GPS_PROVIDER)
+                loc.latitude=p0.lastLocation.latitude
+                loc.longitude=p0.lastLocation.longitude
+                val distance=loc.distanceTo(konkuk)
+                val dis2 =distance/1000
+                if(distance>4000){
+                    val dialog = AlertDialog.Builder(this@MainActivity)
+                    dialog.setTitle("거리 초과")
+                    dialog.setMessage("건국대로부터 $dis2 km 떨어져있습니다.")
+                    dialog.setIcon(R.drawable.ic_baseline_place_24)
+                    dialog.setNegativeButton("무시후 계속사용", DialogInterface.OnClickListener { dialog, which ->
+
+                    })
+                    dialog.setPositiveButton("종료", DialogInterface.OnClickListener { dialog, which ->
+
+                        finish()
+                    })
+                    dialog.show()
+                }
+
+
+            }
+        }
+    }
+
 }
+

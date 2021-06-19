@@ -7,6 +7,9 @@ import android.view.View
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.gms.location.LocationRequest
+import com.google.android.gms.location.LocationServices
+import com.google.firebase.database.*
 import java.io.File
 import java.io.PrintStream
 import java.lang.Exception
@@ -16,12 +19,17 @@ class BlackActivity : AppCompatActivity() {
     lateinit var recyclerView: RecyclerView
     lateinit var adapter: BlackAdapter
 
+
+    lateinit var Firebase2: FirebaseDatabase
+    lateinit var chatref2: DatabaseReference
+
     var black_user:ArrayList<ublack> = ArrayList()
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_black)
+
 
         recyclerView=findViewById(R.id.blackrecycler)
         init()
@@ -36,7 +44,8 @@ class BlackActivity : AppCompatActivity() {
             val scan = Scanner(openFileInput("black.txt"))
             while(scan.hasNextLine()){
                 val id=scan.nextLine()
-                black_user.add(ublack(id))
+                val nick=scan.nextLine()
+                black_user.add(ublack(id,nick))
             }
             scan.close()
         }catch (e: Exception){
@@ -62,10 +71,11 @@ class BlackActivity : AppCompatActivity() {
 
                 for(i in black_user){
                     output.println(i.uid)
+                    output.println(i.nick)
                     output.close()
 
                 }
-                Toast.makeText(this@BlackActivity,"블랙리스트에서 삭제되었습니다",Toast.LENGTH_SHORT).show()
+                Toast.makeText(this@BlackActivity,data.nick+"을 블랙리스트에서 삭제되었습니다",Toast.LENGTH_SHORT).show()
                 adapter.notifyDataSetChanged()
             }
 
@@ -78,7 +88,6 @@ class BlackActivity : AppCompatActivity() {
 
 
     }
-
 
 
 

@@ -10,4 +10,6 @@ data class uinfo(var uid:String, var nick:String)
 
 data class ucolor(var uid:String, var color: Int)
 
-data class ublack(var uid:String)
+data class ublack(var uid:String, var nick:String)
+
+

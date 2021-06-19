@@ -55,7 +55,8 @@ class BlackAdapter (val items:ArrayList<ublack>): RecyclerView.Adapter<BlackAdap
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
 
-        holder.id.text =items[position].uid
+
+        holder.id.text =items[position].nick
 
 
     }

@@ -45,6 +45,7 @@ class PermissionActivity : AppCompatActivity() {
                     showLocationServicesSetting()
                 } else {
                     startActivity(loginIntent)
+
                     finish()
                 }
             }

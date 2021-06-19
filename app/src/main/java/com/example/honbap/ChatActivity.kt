@@ -183,6 +183,7 @@ class ChatActivity : AppCompatActivity() {
                                 PrintStream(openFileOutput("black.txt", Context.MODE_APPEND))
 
                             output.println(data.id)
+                            output.println(data.name)
                             output.close()
 
                             Toast.makeText(
