@@ -6,25 +6,25 @@
       android:icon="@drawable/ic_baseline_groups_24"
       app:showAsAction="ifRoom"
       android:enabled="true"
-      android:title="Groupchat" />
+      android:title="그룹" />
     <item
         android:id="@+id/Singlechat"
         android:icon="@drawable/ic_baseline_chat_24"
         app:showAsAction="ifRoom"
         android:enabled="true"
-        android:title="Singlechat" />
+        android:title="1:1" />
     <item
         android:id="@+id/Map"
         app:showAsAction="ifRoom"
         android:icon="@drawable/ic_baseline_restaurant_24"
         android:enabled="true"
-        android:title="Map" />
+        android:title="음식점" />
     <item
         android:id="@+id/Setting"
         app:showAsAction="ifRoom"
         android:enabled="true"
         android:iconTint="#006600"
         android:icon="@drawable/ic_baseline_settings_24"
-        android:title="Setting" />
+        android:title="설정" />
 
 </menu>

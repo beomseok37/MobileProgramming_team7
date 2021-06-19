@@ -21,7 +21,7 @@
             android:layout_margin="10dp"
             android:clickable="true"
             android:padding="10dp"
-            app:backgroundTint="@android:color/holo_green_light"
+            app:backgroundTint="#00603D"
             app:srcCompat="@drawable/ic_baseline_format_list_bulleted_24" />
 
     </FrameLayout>

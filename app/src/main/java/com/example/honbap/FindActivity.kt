@@ -30,9 +30,9 @@ class FindActivity : AppCompatActivity() {
 
         })
         binding3.apply{
-            returnbtn.setOnClickListener {
-                finish()
-            }
+//            returnbtn.setOnClickListener {
+//                finish()
+//            }
             confirmIDbtn.setOnClickListener {
                 //firebase에서 해당 이메일이 있음을 확인해본다.
                 val findemail=findemail.text.toString()

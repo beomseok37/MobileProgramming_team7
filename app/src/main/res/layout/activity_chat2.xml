@@ -43,7 +43,6 @@
             android:layout_marginStart="28dp"
             android:layout_marginBottom="16dp"
             android:ems="10"
-            android:hint="Message"
             android:inputType="textPersonName" />
 
         <Button
@@ -52,6 +51,9 @@
             android:layout_height="wrap_content"
             android:layout_margin="15dp"
             android:layout_marginBottom="16dp"
+            android:background="#00603D"
+            android:textColor="@color/white"
+            android:textStyle="bold"
             android:text="전송" />
     </LinearLayout>
 
