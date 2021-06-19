@@ -121,4 +121,27 @@ class LoginDBAdapter(val context: Context): SQLiteOpenHelper(context, DB_NAME, n
         val autologin=cursor.getInt(4)
         return UserInDB(uid,uemail,upassword,savelogin,autologin)
     }
+
+    fun logout(){
+        val strsql="select * from $TABLE_NAME;"
+        val db=readableDatabase
+        val cursor = db.rawQuery(strsql,null)
+        cursor.moveToFirst()
+        val uid=cursor.getInt(0)
+        val uemail=cursor.getString(1)
+        val upassword=cursor.getString(2)
+        val savelogin=cursor.getInt(3)
+        val autologin=cursor.getInt(4)
+        if(autologin==1){
+            val values = ContentValues()
+            values.put(UID,uid)
+            values.put(USEREMAIL,uemail)
+            values.put(USERPASSWORD,upassword)
+            values.put(SAVEID,savelogin)
+            values.put(AUTOLOGIN,0)
+            val db = writableDatabase
+            db.update(TABLE_NAME,values,"$UID=$uid",null)
+            db.close()
+        }
+    }
 }

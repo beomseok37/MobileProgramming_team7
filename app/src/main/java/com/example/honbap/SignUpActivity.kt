@@ -48,6 +48,7 @@ class SignUpActivity : AppCompatActivity() {
                 }
 
             })
+
             emailtextinputedittext.addTextChangedListener {
                 if(it.toString().contains("@konkuk.ac.kr")){
                     emailtextinputlayout.error = null
@@ -62,6 +63,7 @@ class SignUpActivity : AppCompatActivity() {
                 //이메일 인증
                 val checkemail=emailtextinputedittext.text.toString()
                 emailindatabase(auto,checkemail)
+
                 certificateflag=true
             }
             sexradiogroup.setOnCheckedChangeListener { _, checkedId ->
