@@ -62,6 +62,7 @@ class SignUpActivity : AppCompatActivity() {
                 //이메일 인증
                 val checkemail=emailtextinputedittext.text.toString()
                 emailindatabase(auto,checkemail)
+
                 certificateflag=true
             }
             sexradiogroup.setOnCheckedChangeListener { _, checkedId ->

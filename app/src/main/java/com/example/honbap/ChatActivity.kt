@@ -152,6 +152,22 @@ class ChatActivity : AppCompatActivity() {
                         startActivity(intent)
                         finish()
                     })
+
+                    dialog.setNeutralButton("차단하기", DialogInterface.OnClickListener { dialog, which ->
+
+//                        val intent = Intent(this@ChatActivity, ChatActivity2::class.java)
+//                        intent.putExtra("other_id", data.id)
+//                        intent.putExtra("other_nick", data.name)
+//                        intent.putExtra("mynick", nick)
+//                        intent.putExtra("myid", id)
+//
+//                        addSingleChatinfo(id, data.id)
+
+                        Toast.makeText(this@ChatActivity,data.name+"을 차단하였습니다.",Toast.LENGTH_LONG).show()
+
+                    })
+
+
                     dialog.setNegativeButton("취소", DialogInterface.OnClickListener { dialog, which ->
                         Toast.makeText(this@ChatActivity, data.name + "님 과 1:1채팅을 취소하였습니다.", Toast.LENGTH_SHORT).show()
 

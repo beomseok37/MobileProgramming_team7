@@ -3,12 +3,13 @@ package com.example.honbap
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.example.honbap.databinding.ActivityMainBinding
-import com.google.firebase.database.*
-import kotlin.math.sin
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
 
 class MainActivity : AppCompatActivity() {
 
@@ -44,42 +45,42 @@ class MainActivity : AppCompatActivity() {
 
 
 
-            binding.bottomNavigationView.selectedItemId=R.id.Setting
-            changeFragment(settingfrag)
-            binding.apply {
-                bottomNavigationView.setOnNavigationItemSelectedListener {
-                   when(it.itemId){
-                       R.id.Groupchat->{
-                          val frag = supportFragmentManager.beginTransaction()
-                           bundle= Bundle()
-                           bundle.putString("id",id)
-                           bundle.putString("nick",nick)
-                           groupfrag.arguments = bundle
-                           changeFragment(groupfrag)
+        binding.bottomNavigationView.selectedItemId=R.id.Setting
+        changeFragment(settingfrag)
+        binding.apply {
+            bottomNavigationView.setOnNavigationItemSelectedListener {
+                when(it.itemId){
+                    R.id.Groupchat->{
+                        val frag = supportFragmentManager.beginTransaction()
+                        bundle= Bundle()
+                        bundle.putString("id",id)
+                        bundle.putString("nick",nick)
+                        groupfrag.arguments = bundle
+                        changeFragment(groupfrag)
 
-                       }
-                       R.id.Singlechat->{
-                           bundle= Bundle()
-                           bundle.putString("id",id)
-                           bundle.putString("nick",nick)
-                           singlefrag.arguments = bundle
-                           changeFragment(singlefrag)
-                       }
-                       R.id.Map->{
-                           changeFragment(resfrag)
-                       }
-                       R.id.Setting->{
-                           changeFragment(settingfrag)
-                       }
-                   }
-                    true
+                    }
+                    R.id.Singlechat->{
+                        bundle= Bundle()
+                        bundle.putString("id",id)
+                        bundle.putString("nick",nick)
+                        singlefrag.arguments = bundle
+                        changeFragment(singlefrag)
+                    }
+                    R.id.Map->{
+                        changeFragment(resfrag)
+                    }
+                    R.id.Setting->{
+                        changeFragment(settingfrag)
+                    }
                 }
-
+                true
             }
+
+        }
 
 
     }
-    fun changeFragment(fragment:Fragment) {
+    fun changeFragment(fragment: Fragment) {
         supportFragmentManager.beginTransaction()
             .replace(R.id.frameLayout,fragment)
             .commit()

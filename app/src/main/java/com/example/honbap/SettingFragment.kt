@@ -2,6 +2,7 @@ package com.example.honbap
 
 import android.app.AlertDialog
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -13,7 +14,7 @@ import com.example.honbap.databinding.FragmentSettingBinding
 import com.google.firebase.database.*
 
 class SettingFragment : Fragment() {
-    lateinit var binding: FragmentSettingBinding
+    var binding: FragmentSettingBinding?=null
     lateinit var rdb: DatabaseReference
     lateinit var LoginDBHelper: LoginDBAdapter
     private lateinit var emailText: EditText
@@ -26,9 +27,7 @@ class SettingFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val intent = requireActivity() as MainActivity
-        binding = FragmentSettingBinding.inflate(layoutInflater)
-        LoginDBHelper = LoginDBAdapter(intent)
+
     }
 
     override fun onCreateView(
@@ -36,6 +35,8 @@ class SettingFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         val intent = requireActivity() as MainActivity
+        binding = FragmentSettingBinding.inflate(layoutInflater)
+        LoginDBHelper = LoginDBAdapter(intent)
         val v:ViewGroup = inflater.inflate(R.layout.fragment_setting, container, false) as ViewGroup
         rdb= FirebaseDatabase.getInstance().getReference("information")
         var auto:Int=LoginDBHelper.getInfo()
@@ -151,14 +152,23 @@ class SettingFragment : Fragment() {
                             //finish()
                         }
                     }
+
                 }
             }
         })
-
-
+        val logoutbtn=v.findViewById<Button>(R.id.logoutbtn)
+        logoutbtn.setOnClickListener {
+            Log.i("logout","logoutbefore")
+            LoginDBHelper.logout()
+            val signinintent= Intent(getActivity()!!.getApplicationContext(),SignInActivity::class.java)
+            startActivity(signinintent)
+            Log.i("logout","logoutafter")
+            getActivity()!!.finish()
+        }
         return v
         //return inflater.inflate(R.layout.fragment_setting, container, false)
     }
+
     override fun onResume() {
         super.onResume()
     }
@@ -179,5 +189,8 @@ class SettingFragment : Fragment() {
         val dlg = builder.create()
         dlg.show()
     }
-
+    override fun onDestroyView() {
+        super.onDestroyView()
+        binding = null
+    }
 }
