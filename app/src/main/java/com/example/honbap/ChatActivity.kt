@@ -52,13 +52,17 @@ class ChatActivity : AppCompatActivity() {
 
         initrecyclerview()
 
+
         val button = findViewById<Button>(R.id.send)
         button.setOnClickListener {
             send()
 
+            recyclerView.scrollToPosition(data.size)
+
             var imm: InputMethodManager?=null
             imm=getSystemService(android.content.Context.INPUT_METHOD_SERVICE) as InputMethodManager
             imm.hideSoftInputFromWindow(button.windowToken,0)
+
 
         }
 
@@ -78,6 +82,7 @@ class ChatActivity : AppCompatActivity() {
                 data.add(Message(name,message,user_id,time))
 
                 adapter.notifyDataSetChanged()
+                recyclerView.scrollToPosition(adapter.itemCount-1)
 
             }
 
@@ -162,6 +167,7 @@ class ChatActivity : AppCompatActivity() {
         }
 
         recyclerView.adapter = adapter
+
 
     }
     //리사이클러뷰

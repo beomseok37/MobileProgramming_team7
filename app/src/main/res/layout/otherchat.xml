@@ -14,8 +14,7 @@
         android:layout_alignParentTop="true"
         android:layout_marginStart="1dp"
         android:layout_marginTop="-1dp"
-        android:background="@color/white"
-        android:backgroundTint="#FDFDFD"
+        android:background="#00ffffff"
         app:layout_constraintBottom_toBottomOf="parent"
         app:srcCompat="@drawable/ic_launcher_foreground" />
 
@@ -24,20 +23,23 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
+        android:textStyle="bold"
+        android:textSize="15sp"
         android:layout_toRightOf="@+id/other_imageView"
         android:text="name"/>
 
 
     <TextView
         android:id="@+id/other_msg"
-        android:padding="10dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/other_name"
         android:layout_marginTop="5dp"
         android:layout_toRightOf="@id/other_imageView"
         android:maxWidth="250dp"
-        android:text="Hello android" />
+        android:padding="10dp"
+        android:text="Hello android"
+         />
 
     <TextView
         android:id="@+id/other_time"
