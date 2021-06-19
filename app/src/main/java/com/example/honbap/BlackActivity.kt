@@ -77,6 +77,8 @@ class BlackActivity : AppCompatActivity() {
                 }
                 Toast.makeText(this@BlackActivity,data.nick+"을 블랙리스트에서 삭제되었습니다",Toast.LENGTH_SHORT).show()
                 adapter.notifyDataSetChanged()
+
+
             }
 
 

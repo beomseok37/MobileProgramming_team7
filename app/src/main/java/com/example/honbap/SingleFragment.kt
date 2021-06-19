@@ -38,6 +38,7 @@ class SingleFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
 
+        black_user.clear()
         read_black()
         user_list.clear()
         getuserid()
@@ -196,6 +197,7 @@ class SingleFragment : Fragment() {
         }
         scan.close()
     }
+
 
 
 }
