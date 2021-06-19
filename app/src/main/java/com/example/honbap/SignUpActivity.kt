@@ -48,7 +48,6 @@ class SignUpActivity : AppCompatActivity() {
                 }
 
             })
-
             emailtextinputedittext.addTextChangedListener {
                 if(it.toString().contains("@konkuk.ac.kr")){
                     emailtextinputlayout.error = null
