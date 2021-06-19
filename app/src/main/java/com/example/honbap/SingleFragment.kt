@@ -9,7 +9,6 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.database.*
-import java.lang.Exception
 import java.util.*
 import kotlin.collections.ArrayList
 
@@ -37,7 +36,7 @@ class SingleFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-
+        black_user.clear()
         read_black()
         user_list.clear()
         getuserid()
