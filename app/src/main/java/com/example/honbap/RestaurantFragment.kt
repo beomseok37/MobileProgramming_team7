@@ -6,18 +6,20 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.isVisible
 import com.example.honbap.databinding.FragmentRestaurantBinding
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import io.grpc.InternalChannelz.id
 import org.json.JSONException
 import org.json.JSONObject
+import kotlin.properties.Delegates
 
 
 class RestaurantFragment : Fragment() {
 
-    lateinit var binding: FragmentRestaurantBinding
     val listfrag=ListFragment()
     val mapfrag=MapsFragment()
+    var isAvailable by Delegates.notNull<Boolean>()
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -46,6 +48,7 @@ class RestaurantFragment : Fragment() {
 
             }
         }
+
     }
     companion object{
         val datalist=ArrayList<ResData>()

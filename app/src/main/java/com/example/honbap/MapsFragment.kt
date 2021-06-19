@@ -16,13 +16,11 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.core.app.ActivityCompat
+import androidx.core.view.isVisible
 import com.google.android.gms.location.*
 import com.google.android.gms.location.places.PlaceReport
 import com.google.android.gms.maps.*
-import com.google.android.gms.maps.model.BitmapDescriptorFactory
-import com.google.android.gms.maps.model.CircleOptions
-import com.google.android.gms.maps.model.LatLng
-import com.google.android.gms.maps.model.MarkerOptions
+import com.google.android.gms.maps.model.*
 import com.google.android.libraries.places.api.Places
 import com.google.android.libraries.places.api.model.Place
 import com.google.android.libraries.places.api.model.PlaceLikelihood
@@ -34,6 +32,7 @@ import noman.googleplaces.PlacesException
 import noman.googleplaces.PlacesListener
 import java.lang.reflect.GenericArrayType
 import java.lang.reflect.InvocationTargetException
+import kotlin.properties.Delegates
 
 
 class MapsFragment : Fragment(),PlacesListener {
@@ -69,9 +68,6 @@ class MapsFragment : Fragment(),PlacesListener {
         val mapFragment = childFragmentManager.findFragmentById(R.id.map) as SupportMapFragment?
         mapFragment?.getMapAsync{
             googleMap=it
-            if(clickitem) {
-                showResLos()
-            }
         }
 
     }
@@ -105,10 +101,29 @@ class MapsFragment : Fragment(),PlacesListener {
             override fun onLocationResult(location: LocationResult) {
                 if(location.locations.size==0) return
                 //현재위치
-                loc=LatLng(location.locations[location.locations.size-1].latitude,
-                    location.locations[location.locations.size-1].longitude)
-                if(!clickitem)
-                    setCurrentLocation(loc) //위치이동하는 함수
+                val latitude=location.locations[location.locations.size-1].latitude
+                val longitude= location.locations[location.locations.size-1].longitude
+                loc=LatLng(latitude, longitude)
+
+                val konkuk=Location(LocationManager.GPS_PROVIDER)
+                konkuk.latitude=37.5408
+                konkuk.longitude=127.0793
+                val currentLoc=Location(LocationManager.GPS_PROVIDER)
+                currentLoc.latitude=latitude
+                currentLoc.longitude=longitude
+                val distance=currentLoc.distanceTo(konkuk)
+                if(!clickitem) {
+                    if(distance>4000){
+                        setCurrentLocation(loc)
+                    }
+                   else{
+                        setCurrentLocation(loc)
+                        initPlaces(loc)
+                    }
+                }
+                else{
+                    showResLos()
+                }
                 Log.i("location","LocationCallback()")
 
             }
@@ -122,7 +137,7 @@ class MapsFragment : Fragment(),PlacesListener {
         ) {
             return
         }
-        else{
+       else{
             startupdate=true
             fusedLocationProviderClient.requestLocationUpdates(
                 locationRequest,locationCallback, Looper.getMainLooper()
@@ -132,12 +147,12 @@ class MapsFragment : Fragment(),PlacesListener {
 
     //현재 위치로 위치 옮겨주는 함수
     fun setCurrentLocation(location:LatLng){
+        googleMap.clear()
         val option=MarkerOptions()
         option.position(location)
         option.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN))
         googleMap.addMarker(option)
         googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(location,16.0f))
-        initPlaces()
     }
 
     private fun stopLocationUpdate(){
@@ -156,8 +171,8 @@ class MapsFragment : Fragment(),PlacesListener {
         stopLocationUpdate()
     }
 
-    fun initPlaces(){
-        if(!clickitem){
+    fun initPlaces(loc:LatLng){
+        if(!clickitem ){
             NRPlaces.Builder()
                 .listener(this)
                 .key("AIzaSyCtpiZvm086B2evtw2F79PfS6ZocyY2Ey8")
