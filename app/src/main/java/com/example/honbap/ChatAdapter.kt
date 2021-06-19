@@ -13,8 +13,12 @@ import kotlin.random.Random
 class ChatAdapter (val items:ArrayList<Message>,val id:String): RecyclerView.Adapter<ChatAdapter.ViewHolder>() {
 
     val r =Random
+    val groupcolor :ArrayList<ucolor> = ArrayList()
 
     val mycolor=Color.rgb(r.nextInt(255),r.nextInt(255),r.nextInt(255))
+
+    var othercolor=0
+
 
 
     interface OnItemClickListener {
@@ -63,6 +67,20 @@ class ChatAdapter (val items:ArrayList<Message>,val id:String): RecyclerView.Ada
 
 
     override fun getItemViewType(position: Int): Int {
+
+        var find =false
+        for(i in groupcolor){
+            if(i.uid==items[position].id) {
+                find=true
+                break
+            }
+        }
+        if(find==false) {
+            val new =ucolor(items[position].id,Color.rgb(r.nextInt(255),r.nextInt(255),r.nextInt(255)))
+            groupcolor.add(new)
+
+        }
+
         if(id==items[position].id)
             return 0
         else
@@ -81,6 +99,7 @@ class ChatAdapter (val items:ArrayList<Message>,val id:String): RecyclerView.Ada
 
             else->  {
                 val view2 = LayoutInflater.from(parent.context).inflate(R.layout.otherchat, parent, false)
+
                 return ViewHolder(view2)
             }
         }
@@ -93,6 +112,7 @@ class ChatAdapter (val items:ArrayList<Message>,val id:String): RecyclerView.Ada
 
 
         if(holder.itemViewType==0) {
+
 
 
             val mname: TextView = holder.itemView.findViewById(R.id.my_name)
@@ -117,6 +137,11 @@ class ChatAdapter (val items:ArrayList<Message>,val id:String): RecyclerView.Ada
             val otime: TextView = holder.itemView.findViewById(R.id.other_time)
            val img= holder.itemView.findViewById<ImageView>(R.id.other_imageView)
 
+            for(i in groupcolor)
+                if(i.uid==items[position].id){
+                    img.setColorFilter(i.color,PorterDuff.Mode.SRC_IN)
+                    break
+                }
 
             oname.text = items[position].name
             omessage.text = items[position].message
