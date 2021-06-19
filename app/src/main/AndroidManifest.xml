@@ -2,7 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.honbap">
 
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 
     <application
         android:allowBackup="false"
@@ -11,6 +11,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.HonBap">
+        <activity android:name=".BlackActivity"></activity>
+
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyBKhLE4lgjq1bcnhQ6AuEp-OjMns6gUwY8" />
@@ -18,7 +20,7 @@
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
 
-        <activity android:name=".FindActivity"></activity>
+        <activity android:name=".FindActivity" />
         <activity android:name=".SignUpActivity" />
         <activity android:name=".SignInActivity" />
         <activity android:name=".PermissionActivity">
@@ -28,13 +30,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".MainActivity">
-
-        </activity>
-        <activity android:name=".ChatActivity"
-           />
-        <activity android:name=".ChatActivity2"
-            />
+        <activity android:name=".MainActivity"></activity>
+        <activity android:name=".ChatActivity" />
+        <activity android:name=".ChatActivity2" />
     </application>
 
 </manifest>

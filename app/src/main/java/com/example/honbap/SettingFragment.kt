@@ -104,6 +104,11 @@ class SettingFragment : Fragment() {
                         }
                     }
                     button = v.findViewById(R.id.joinbtn)
+                    val black_btn =v.findViewById<Button>(R.id.black)
+                    black_btn.setOnClickListener {
+                        val intent =Intent(requireActivity(),BlackActivity::class.java)
+                        startActivity(intent)
+                    }
 
                     button.setOnClickListener {
                         Log.i("button","button")

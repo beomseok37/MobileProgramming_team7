@@ -17,8 +17,6 @@ class ChatAdapter (val items:ArrayList<Message>,val id:String): RecyclerView.Ada
 
     val mycolor=Color.rgb(r.nextInt(255),r.nextInt(255),r.nextInt(255))
 
-    var othercolor=0
-
 
 
     interface OnItemClickListener {
