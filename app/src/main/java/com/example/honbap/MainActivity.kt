@@ -163,7 +163,7 @@ class MainActivity : AppCompatActivity() {
                 if(distance>4000){
                     val dialog = AlertDialog.Builder(this@MainActivity)
                     dialog.setTitle("거리 초과")
-                    dialog.setMessage("건국대로부터 {$dis2}km 떨어져있습니다.")
+                    dialog.setMessage("건국대로부터 ${dis2}km 떨어져있습니다.")
                     dialog.setIcon(R.drawable.ic_baseline_place_24)
                     dialog.setNegativeButton("무시 후 계속 사용", DialogInterface.OnClickListener { dialog, which ->
 
